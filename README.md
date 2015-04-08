@@ -28,3 +28,5 @@ hello.js   --- 主入口文件
 package.json ---配置文件
 README.md
 ```
+
+运行命令：node --harmony hello.js
