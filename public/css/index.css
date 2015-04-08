@@ -1,0 +1,47 @@
+body{font-family:'Microsoft YaHei';}
+@font-face {font-family: "iconfont";
+  src: url('//at.alicdn.com/t/font_1428050028_6784868.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1428050028_6784868.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1428050028_6784868.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1428050028_6784868.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1428050028_6784868.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.blogiconfont {font-family:"iconfont" !important;font-size:16px;font-style:normal;-webkit-font-smoothing: antialiased;-webkit-text-stroke-width: 0.2px;-moz-osx-font-smoothing: grayscale;}
+.icon-error:before {content:"\e600";color:#ff0000;}
+.icon-warning:before {content:"\e601"; }
+.icon-eyes:before {content:"\e602"; }
+.icon-edit:before {content: "\e605";font-size:14px;}
+.icon-del:before {content: "\e603";}
+.icon-add:before {content:"\e606"; }
+
+.error{color:#a94442;}
+.edit{margin-left:10px;letter-spacing:-2px;font-size:14px;}
+.del{margin-left:10px;}
+.add{font-size:14px;}
+.fright{float:right;}
+.w1200{width:1200px;}
+.mt50{margin-top:50px;}
+.mlrAuto{margin:0 auto;}
+.loginBox{margin:0 auto;width:600px;height:600px;}
+.loginBox h2{text-align:center;}
+.loginNickname{margin-right:10px;}
+.navbar{margin-bottom:0;}
+.banner{background: url(../images/banner_top.jpg) top center;height: 265px;overflow: hidden;}
+.blogIndex{margin:50px auto;padding: 0 100px;}
+.blogIndexListBox>div{margin-bottom:15px;}
+.blogIndexList{padding:0 20px 1px; box-shadow:5px 5px 5px rgba(0,0,0,.3)}
+.blogIndexList h3{text-align:center;}
+.blogIndexList p{line-height:20px;height:40px;overflow:hidden;}
+.blogInfo{max-height:40px;}
+.blogOther{font-size:12px;}
+.blogOther .blogRead{float:right;}
+.IndexLearnMore{margin-top:30px;}
+
+.blogDetail{margin-top:20px;margin-bottom:20px;}
+.blogDetail .blogDetailTitle .edit{letter-spacing:0;}
+.blogDetail .blogDetailTitle span{margin-left:10px; font-size:12px;}
+.blogDetailCon{margin-top:30px;}
+.breadcrumb{background:transparent;}
+.errorMsg{display:none; margin-left:10px;color:#ff0000;}
+footer{height:70px;background:#f9f9f9;color:#333;font-size:14px;line-height:70px;}

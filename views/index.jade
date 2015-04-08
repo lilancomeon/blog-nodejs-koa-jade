@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    .banner
+     section.w1200.mlrAuto
+      ul.texts
+        p 我们不停的翻弄着回忆
+        p 却再也找不回那时的自己
+        p 红尘一梦，不再追寻
+      .avatar
+        a(href='about.html')
+          span 李兰
+    .blogIndex.w1200
+        .row.blogIndexListBox
+         each blog in blogs
+          .col-xs-6.col-sm-4
+            .blogIndexList
+              h3=blog.title
+              p.blogInfo=blog.content
+              p.blogOther
+                span
+                   span.blogiconfont.icon-eyes
+                   =blog.click
+                   if(nickname)
+                    a(href="/blog/newblog/"+blog.id,title="修改").edit
+                     span.blogiconfont.icon-edit
+                    a(href="/blog/del/"+blog.id,title="删除")
+                     span.blogiconfont.icon-del.del
+                a(href='/blog/article/'+blog.id).blogRead 阅读详情
+        p.text-right.IndexLearnMore
+          a.btn.btn-default(href='blog/list', role='button') Learn more

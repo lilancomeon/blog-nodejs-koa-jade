@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .row.w1200.mlrAuto.blogDetail
+    ol.breadcrumb
+      li
+        a(href='/') Home
+      li
+        a(href='/blog/list/'+blogCatagory.id)=blogCatagory.catagory
+      li.active=singleBlog.title
+    .col-md-9
+        h3.blogDetailTitle=singleBlog.title
+          if(nickname)
+            a.fright.add(href='/blog/newblog/?cate='+singleBlog.catagoryId)
+             span.blogiconfont.icon-add
+             | 新增文章
+            a.fright.edit(href='/blog/newblog/'+singleBlog.id,title="修改")
+              span.blogiconfont.icon-edit
+              | 修改
+          span.create_time=singleBlog.update_time
+          span 点击数：
+            =singleBlog.click
+        p.blogDetailCon=singleBlog.content
+       .col-md-3
+        .list-group
+          a.list-group-item.active(href='#')
+            | 分类
+          each cata in catagoryList
+            a.list-group-item(href='/blog/list/'+cata.id)=cata.catagory

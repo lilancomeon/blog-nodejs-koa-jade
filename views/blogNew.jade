@@ -1,0 +1,40 @@
+extends layout
+
+block content
+ .row.w1200.mlrAuto
+    ol.breadcrumb
+      li
+        a(href='/') Home
+      li
+        a(href='/blog/list/'+blogCatagory.id)=blogCatagory.catagory
+      li.active
+        if(isNew)
+         |新增
+        else
+          |修改
+          =blog.title
+
+    form.form-horizontal
+      .form-group
+        label.col-sm-1.control-label(for='inputTitle') Title
+        .col-sm-11
+          if(isNew)
+            input.form-control.required(type='text', placeholder='title',name="title",value='',maxlength="40")
+          else
+            input(type='hidden',id='id',name='id',value='#{blog.id}')
+            input.form-control.required(type='text', placeholder='title',name="title",value='#{blog.title}',maxlength="40")
+
+      .form-group
+        label.col-sm-1.control-label(for='inputPassword3') Content
+        .col-sm-11
+          if(isNew)
+            textarea.form-control.required(rows='3',name="content")
+          else
+            textarea.form-control.required(rows='3',name="content")=blog.content
+      .form-group
+        .col-sm-offset-1.col-sm-11
+          input(type='hidden',id='catagoryId',name='catagoryId',value='#{blogCatagory.id}')
+          span.btn.btn-default.J-blogEditBtn(type='submit') Submit
+          span.J-errorMsg.errorMsg
+            i.blogiconfont.icon-error
+            span

@@ -1,0 +1,50 @@
+extends layout
+
+block content
+ .row.w1200.mlrAuto
+  div.table-responsive
+    h3 文章列表
+    table.table
+      if(blogs.length > 0)
+       each blog in blogs
+         tr
+           td
+             a(href='/blog/article/' + blog.id)=blog.title
+           td
+            =blog.update_time
+      else
+        tr
+          td
+            p 没有相关文章
+    if(totalPage > 1)
+    nav
+        ul.pagination
+          li
+            if(catagoryId)
+              a(href='/blog/page/1?cata='+catagoryId+'&t='+totalPage, aria-label='Previous')
+                span(aria-hidden='true') «
+            else
+              a(href='/blog/page/1?t='+totalPage, aria-label='Previous')
+                span(aria-hidden='true') «
+          - var page=totalPage
+          - for (var i = 1; i <= totalPage; ++i) {
+              if(i==curPage)
+                li.active
+                  if(catagoryId)
+                    a(href='/blog/page/#{i}?cata='+catagoryId+'&t='+totalPage) #{i}
+                  else
+                    a(href='/blog/page/#{i}?t='+totalPage) #{i}
+              else
+                li
+                  if(catagoryId)
+                    a(href='/blog/page/#{i}?cata='+catagoryId+'&t='+totalPage) #{i}
+                  else
+                    a(href='/blog/page/#{i}?t='+totalPage) #{i}
+          - }
+          li
+            if(catagoryId)
+              a(href='/blog/page/'+totalPage+'?cata='+catagoryId+'&t='+totalPage, aria-label='Next')
+                span(aria-hidden='true') »
+            else
+              a(href='/blog/page/'+totalPage+'?t='+totalPage, aria-label='Next')
+                span(aria-hidden='true') »

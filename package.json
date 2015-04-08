@@ -1,0 +1,21 @@
+{
+	"name":"useKoa",
+	"version":"0.0.1",
+	"private":true,
+	"scripts":{
+		"start":"node hello.js"
+	},
+	"dependencies":{
+		"koa": "latest",
+		"koa-router": "latest",
+		"co-views": "latest",
+		"Mustache": "latest",
+		"jade":"latest",
+		"koa-static": "latest",
+		"co-body": "latest",
+		"thunkify": "latest",
+		"debug": "latest",
+		"sequelize": "latest",
+		"canvas": "latest"
+	}
+}
