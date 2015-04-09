@@ -219,12 +219,13 @@ function _dateListFormat(dates,formatStr){
 }
 // 获取sess
 function _nickName(str){
-	var sessJson = JSON.parse(str);
-	if(typeof sessJson.nickname !="undefined"){
-    	sessJson.nickname = decodeURI(sessJson.nickname)
-    }else{
-    	sessJson.nickname = ""
+  var sessJson = '';
+  if(str != ''){
+    sessJson = JSON.parse(str);
+    if(typeof sessJson.nickname !="undefined"){
+      	sessJson.nickname = decodeURI(sessJson.nickname)
     }
-    return sessJson;
+  }
+  return sessJson;
 }
 
