@@ -20,10 +20,59 @@ block content
           span.create_time=singleBlog.update_time
           span 点击数：
             =singleBlog.click
-        p.blogDetailCon=singleBlog.content
-       .col-md-3
-        .list-group
-          a.list-group-item.active(href='#')
-            | 分类
-          each cata in catagoryList
-            a.list-group-item(href='/blog/list/'+cata.id)=cata.catagory
+        div.blogDetailCon=singleBlog.content
+        if(nickname)
+          form
+            .commentSubmitBox
+              textarea.J-mdEditor(placeholder='写下你的评论…')
+              p.text-right.blogCommentBtnBox
+                a.btn.btn-default.J-commentBtn(href='javascript:;', role='button',data-id="#{singleBlog.id}") 提交
+        .commentList.J-commentList
+          each comment,index in commentList
+            .commentBox
+              h4.comment
+                span.comment_date=comment.commentDate
+                a.layer(href='##{comment.id}') # #{index+1}楼&nbsp;
+                a(name='#{comment.id}')
+                span.comment_user=comment.nickname
+              .comment_body
+                p #{comment.comment}
+              .comment_vote.J-commentVote(data-id='#{comment.id}',data-bid='#{singleBlog.id}')
+                span.J-commentApproval
+                  i.blogiconfont.icon-approval.J-iconApproval
+                  span #{comment.support}
+                span
+                  i.blogiconfont.icon-comment.J-iconComment
+                  span #{comment.counts}
+        //- if(totalPage > 1)
+        //-   nav
+        //-     ul.pagination
+        //-       li
+        //-         if((curPage-1) == 0)
+        //-           a(href='/blog/comment/1?blogid='+singleBlog.id, aria-label='Previous')
+        //-             span(aria-hidden='true') «
+        //-         else
+        //-           a(href='/blog/comment/#{curPage-1}?blogid='+singleBlog.id, aria-label='Previous')
+        //-            span(aria-hidden='true') «
+        //-       - var temp = curPage + 4
+        //-       - for (var i = 1; i <= temp; ++i){
+        //-           if(i==curPage)
+        //-             li.active
+        //-               a(href='/blog/comment/#{i}?blogid='+singleBlog.id) #{i}
+        //-           else
+        //-             li
+        //-               a(href='/blog/comment/#{i}?blogid='+singleBlog.id) #{i}
+        //-       - }
+        //-       li
+        //-         if((temp+1) > totalPage)
+        //-           a(href='/blog/comment/#{totalPage}?blogid='+singleBlog.id, aria-label='Next')
+        //-             span(aria-hidden='true') »
+        //-         else
+        //-           a(href='/blog/comment/#{temp+1}?blogid='+singleBlog.id, aria-label='Next')
+        //-             span(aria-hidden='true') »
+    .col-md-3
+      .list-group
+        a.list-group-item.active(href='#')
+          | 分类
+        each cata in catagoryList
+          a.list-group-item(href='/blog/list/'+cata.id)=cata.catagory

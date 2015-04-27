@@ -27,12 +27,18 @@ html
                   span.loginNickname=nickname
                   a.J_loginOut(href="/loginDo?method=loginOut") Sign out
                 else
-                  a.navbar-link(href='/login') Sign in
+                  a.navbar-link(href='/login')
+                   u Sign in
+                  | &nbsp;or&nbsp;
+                  a.navbar-link(href='/register')
+                   u Register
 
     .pageCon
       block content
     footer
       .w1200.mlrAuto contact me:lilan
   script.
-      seajs.config({base: "/"});
+      seajs.config({
+        base: "/"
+      });
       seajs.use(['js/home/blog']);
