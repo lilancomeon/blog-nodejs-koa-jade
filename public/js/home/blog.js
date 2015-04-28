@@ -1,6 +1,7 @@
 define('js/home/blog',function(require, exports) {
     var mdEditor = require("js/commonPlugins/mdEditor");
-    require('js/commonPlugins/jquery.tmpl')
+        require('js/commonPlugins/jquery.tmpl');
+    var markedJquery = require('js/commonPlugins/markedJquery');
         var self = {
                 param : {
                     signInbtn : $(".J-signInbtn"),
@@ -40,7 +41,7 @@ define('js/home/blog',function(require, exports) {
                                               '<span class="comment_user">lilan</span>',
                                             '</h4>',
                                             '<div class="comment_body">',
-                                              '${comment}',
+                                              '{{html comment}}',
                                             '</div>',
                                           '</div>',
                                     '{{/each}}'].join("")
@@ -150,7 +151,7 @@ define('js/home/blog',function(require, exports) {
                             var blogId = parseInt($(this).attr('data-id')) || 0;
                             var obj = {
                                 blogid : blogId,
-                                comment : $(param.mdEditor).val(),
+                                comment : markedJquery($(param.mdEditor).val()),
                                 method : "commentBlog"
                             }
                             Events.doBlogAjax({
@@ -279,7 +280,7 @@ define('js/home/blog',function(require, exports) {
 
                         var obj = {
                                 refComment : id,
-                                comment : comment,
+                                comment : markedJquery(comment),
                                 blogid : blogid,
                                 method : "commentSm"
                         }

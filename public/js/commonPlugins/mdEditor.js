@@ -1,5 +1,5 @@
 define("js/commonPlugins/mdEditor",function(require, exports, module){
-	var markedKissy = require("js/commonPlugins/markedKissy");
+	var markedJquery = require("js/commonPlugins/markedJquery");
 	var clickNum=0;
 	var defaultConfig = null,
 	mdEditor = function(options){
@@ -177,7 +177,7 @@ define("js/commonPlugins/mdEditor",function(require, exports, module){
 				    editBtn = warpDiv.find(defaultConfig.mdEdit),
 				    txt = warpDiv.find('textarea'),
 				    txtVal = txt.val(),
-				    markedTxt = markedKissy(txtVal),
+				    markedTxt = markedJquery(txtVal),
 				    txtareaPreviewDom = _self.addPreviewDom(txt);
 				// 编辑框隐藏，预览框显示
 				txt.hide();
@@ -351,7 +351,7 @@ define("js/commonPlugins/mdEditor",function(require, exports, module){
 				var tempLeftText = $(mergeIframe[0].contentWindow.document.body).find("textarea")
 				var tempRightIframe = $(mergeIframe[0].contentWindow.document.body).find("iframe");
 				_self.leftAreaBindEvent(mergeIframe,leftEditDivName);
-				_self.iframeSetVal(tempRightIframe,markedKissy(editContainter.val()),true);
+				_self.iframeSetVal(tempRightIframe,markedJquery(editContainter.val()),true);
 			}
 
 			_self.requestFullScreen(fatherIframeDom);
@@ -433,7 +433,7 @@ define("js/commonPlugins/mdEditor",function(require, exports, module){
 				if(tempTime > 500){
 					var txt = $(e.currentTarget).val();
 					if(txt != ""){
-						_self.iframeSetVal(rightIframe,markedKissy(txt),true);
+						_self.iframeSetVal(rightIframe,markedJquery(txt),true);
 						beforeTime = curTime;
 					}
 				}

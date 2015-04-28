@@ -36,7 +36,7 @@ block content
                 a(name='#{comment.id}')
                 span.comment_user=comment.nickname
               .comment_body
-                p #{comment.comment}
+                p!=comment.comment
               .comment_vote.J-commentVote(data-id='#{comment.id}',data-bid='#{singleBlog.id}')
                 span.J-commentApproval
                   i.blogiconfont.icon-approval.J-iconApproval
