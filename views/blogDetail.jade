@@ -20,7 +20,7 @@ block content
           span.create_time=singleBlog.update_time
           span 点击数：
             =singleBlog.click
-        div.blogDetailCon=singleBlog.content
+        div.blogDetailCon.epiceditor-wrapper!=singleBlog.htmlContent
         if(nickname)
           form
             .commentSubmitBox
@@ -37,7 +37,7 @@ block content
                 a.layer(href='##{comment.id}') # #{index+1}楼&nbsp;
                 a(name='#{comment.id}')
                 span.comment_user(data-uid="#{comment.userId}")=comment.nickname
-              .comment_body
+              .comment_body.epiceditor-wrapper
                 p!=comment.comment
               .comment_vote.J-commentVote(data-id='#{comment.id}',data-bid='#{singleBlog.id}')
                 span.J-commentApproval

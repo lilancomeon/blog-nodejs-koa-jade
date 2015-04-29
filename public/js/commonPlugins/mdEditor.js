@@ -24,7 +24,6 @@ define("js/commonPlugins/mdEditor",function(require, exports, module){
 			mdFullScreen : ".J-mdFullScreen"
 		},options);
 	}
-
 	mdEditor.prototype = {
 		init : function(){
 			if(!this.initIsIdOrClass()) return false;
@@ -269,6 +268,13 @@ define("js/commonPlugins/mdEditor",function(require, exports, module){
             }
         }
 	    });
+			// $(document).keyup(function(event){
+			// 	if(event.keyCode ==27){
+			// 		_self.exitFullscreen();
+			// 		$(defaultConfig.containter).siblings("iframe").hide();
+			// 	}
+			// });
+      _self.exitFullscreen();
 		},
 		containterEvents : function(txt){
 			var containter = txt,
@@ -306,7 +312,7 @@ define("js/commonPlugins/mdEditor",function(require, exports, module){
 				fatherIframeName = ".J-fatherIframe",
 				fatherIframeDom = editContainterP.parents("body").find(fatherIframeName);
 			if(fatherIframeDom.length == 0){
-				var	fatherIframe = $('<iframe marginwidth="0" marginheight="0" frameborder="0" scrolling="no" class="J-fatherIframe" style="border: none; width: 100%; overflow-y:scroll;overflow-x:hidden;display:none"></iframe>'),
+				var	fatherIframe = $('<iframe marginwidth="0" marginheight="0" frameborder="0" scrolling="no" class="J-fatherIframe" style="border: none; width: 100%; overflow-y:scroll;overflow-x:hidden;"></iframe>'),
 					leftEditDom = $('<textarea class="J-leftEditDiv" style="padding:5px;border:none;"></textarea>'),
 					rightIframeDom = $('<iframe marginwidth="0" marginheight="0" frameborder="0" scrolling="no" class="J-rightEditIframe" style="border: none; width: 100%; overflow-y:scroll;overflow-x:hidden;"></iframe>'),
 					screenW = window.screen.width,
@@ -318,11 +324,11 @@ define("js/commonPlugins/mdEditor",function(require, exports, module){
 					background : "#ddd",
 					position: 'fixed',
 					top: '0',
-	                left: '0',
-	                'z-index': '9999',
-	                zIndex: '9999',
-	                border: 'none',
-	                margin: 0
+          left: '0',
+          'z-index': '9999',
+          zIndex: '9999',
+          border: 'none',
+          margin: 0
 				});
 				leftEditDom.css({
 					width : averageW-1,
@@ -353,8 +359,8 @@ define("js/commonPlugins/mdEditor",function(require, exports, module){
 				_self.leftAreaBindEvent(mergeIframe,leftEditDivName);
 				_self.iframeSetVal(tempRightIframe,markedJquery(editContainter.val()),true);
 			}
-
 			_self.requestFullScreen(fatherIframeDom);
+			// _self.requestFullScreen(editContainter);
 			_self.listenKeyDown(fatherIframeDom);
 			_self.leftAreaBindEvent(fatherIframeDom,leftEditDivName);
 		},
@@ -388,39 +394,60 @@ define("js/commonPlugins/mdEditor",function(require, exports, module){
 		        var wscript = new ActiveXObject("WScript.Shell");
 		        if (wscript !== null) {
 		            wscript.SendKeys("{F11}");
+		            $(element).hide();
 		        }
 		    }
 		},
     listenKeyDown : function(fatherIframeDom){
       var _self = this;
-        	document.addEventListener("fullscreenchange", function (e) {
-        		_self.doit(fatherIframeDom);
+      document.addEventListener("fullscreenchange", function(e){
+        		_self.doit(fatherIframeDom,document.fullscreen);
 			}, false);
 
-			document.addEventListener("mozfullscreenchange", function (e) {
-			    _self.doit(fatherIframeDom);
+			document.addEventListener("mozfullscreenchange", function(e){
+			    _self.doit(fatherIframeDom,document.mozFullScreen);
 			}, false);
 
-			document.addEventListener("webkitfullscreenchange", function (e){
-				_self.doit(fatherIframeDom);
+			document.addEventListener("webkitfullscreenchange", function(e){
+				_self.doit(fatherIframeDom,document.webkitIsFullScreen);
 			}, false);
+			document.addEventListener("msfullscreenchange",function(e){
+				_self.doit(fatherIframeDom,document.msFullscreenElement);
+			},false);
     },
-    doit : function(fatherIframeDom){
-    		if(typeof fatherIframeDom.attr("flag") != 'undefined'){
-    			//说明是退出
-    			fatherIframeDom.removeAttr("flag");
-    			fatherIframeDom.toggle();
-    			var iframeTxt = $(fatherIframeDom[0].contentWindow.document.body).find("textarea"),
-	        		iframeTxtVal = iframeTxt.val(),
-	                oldText = fatherIframeDom.siblings("textarea"),
-	                oldTextVal = oldText.val();
-                oldText.val(iframeTxtVal);
-    		}else{
-    			// 第一次加载，说明点击的是全屏
-    			fatherIframeDom.attr("flag","true");
-        		fatherIframeDom.toggle();
-    		}
+    doit : function(fatherIframeDom,fullType){
+    	fullType?fatherIframeDom.show():fatherIframeDom.hide();
+    	if(!fullType){
+    		var iframeTxt = $(fatherIframeDom[0].contentWindow.document.body).find("textarea"),
+      		iframeTxtVal = iframeTxt.val(),
+          oldText = fatherIframeDom.siblings("textarea"),
+          oldTextVal = oldText.val();
+       oldText.val(iframeTxtVal);
+     }
     },
+    launchFullscreen : function(element) {
+    	element = element[0];
+		  if(element.requestFullscreen) {
+		    element.requestFullscreen();
+		  } else if(element.mozRequestFullScreen) {
+		    element.mozRequestFullScreen();
+		  } else if(element.webkitRequestFullscreen) {
+		    element.webkitRequestFullscreen();
+		  } else if(element.msRequestFullscreen) {
+		    element.msRequestFullscreen();
+		  }
+		},
+    exitFullscreen : function(){
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			}
+			else if (document.webkitCancelFullScreen){
+				document.webkitCancelFullScreen();
+			}
+			else if (document.mozCancelFullScreen){
+				document.mozCancelFullScreen();
+			}
+		},
     leftAreaBindEvent : function(mergeIframe,leftTxt){
      	var iframeDOC = mergeIframe[0].contentWindow.document,
      	    iframeBody = $("body", iframeDOC),

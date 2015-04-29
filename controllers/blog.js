@@ -222,7 +222,7 @@ exports.blogDo = function*(next){
     };break;
     case 'edit':{
       // 修改博客
-      var result = yield db.sequelize.query('update blog set title=\''+this.query.title+'\',content=\''+this.query.content+'\' where id='+this.query.id);
+      var result = yield db.sequelize.query('update blog set title=\''+this.query.title+'\',content=\''+this.query.content+'\',htmlContent=\''+this.query.htmlContent+'\' where id='+this.query.id);
       var obj = {
         isSuccess : true,
         id : this.query.id

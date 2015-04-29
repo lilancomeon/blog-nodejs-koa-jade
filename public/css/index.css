@@ -1,4 +1,4 @@
-body{font-family:'Microsoft YaHei';}
+body{font-family:'Microsoft YaHei';position: relative;}
 @font-face {font-family: "iconfont";
   src: url('//at.alicdn.com/t/font_1428914101_3621476.eot'); /* IE9*/
   src: url('//at.alicdn.com/t/font_1428914101_3621476.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */

@@ -28,6 +28,9 @@ exports.blog = seq.define('blog',{
 	},
 	click:{
 		type:Sequelize.INTEGER
+	},
+	htmlContent :{
+		type:Sequelize.TEXT
 	}
 });
 exports.blogCatagory = seq.define('blogcatagory',{

@@ -28,7 +28,8 @@ block content
         label.col-sm-1.control-label(for='inputPassword3') Content
         .col-sm-11
           if(isNew)
-            textarea.form-control.required(rows='3',name="content")
+            //- textarea.form-control.required(rows='3',name="content")
+            textarea.J-newBlogMdEditor.required(placeholder='写下你的评论…',name="content")
           else
             textarea.form-control.required(rows='3',name="content")=blog.content
       .form-group

@@ -11,6 +11,7 @@ define('js/home/blog',function(require, exports) {
                     commentBtn : $(".J-commentBtn"),
                     commentForm :null,
                     mdEditor : ".J-mdEditor",
+                    newBlogMdEditor : ".J-newBlogMdEditor",
                     commentList : $(".J-commentList"),
                     iconApproval : ".J-iconApproval",
                     iconComment : ".J-iconComment",
@@ -40,7 +41,7 @@ define('js/home/blog',function(require, exports) {
                                               '<a name="#${id}"></a>',
                                               '<span class="comment_user">lilan</span>',
                                             '</h4>',
-                                            '<div class="comment_body">',
+                                            '<div class="comment_body epiceditor-wrapper">',
                                               '{{html comment}}',
                                             '</div>',
                                           '</div>',
@@ -63,6 +64,13 @@ define('js/home/blog',function(require, exports) {
                     });
                     new mdEditor({
                         containter : param.mdEditor,
+                        useTitle : false,
+                        titleName : "J-mdEditorInput",
+                        width:'auto',
+                        height:120
+                    }).init();
+                    new mdEditor({
+                        containter : param.newBlogMdEditor,
                         useTitle : false,
                         titleName : "J-mdEditorInput",
                         width:'auto',
@@ -99,14 +107,15 @@ define('js/home/blog',function(require, exports) {
                     });
                     // 添加或修改博客事件
                     param.blogEditBtn.on('click',function(){
-                       var thisForm = $(this).parents('form');
-
+                       var thisForm = $(this).parents('form'),
+                           thisTxt = thisForm.find("textarea");
                        if(thisForm.valid()){
                            var datas=thisForm.serialize(),
                                methodStr = "edit";
                            if(datas.indexOf("id") == -1){
                                methodStr = "create"
                            }
+                           datas +="&htmlContent="+markedJquery(thisTxt.val());
                            datas +="&method="+methodStr;
                            var obj = {
                                datas : datas
@@ -143,6 +152,12 @@ define('js/home/blog',function(require, exports) {
                                 alert('error ' + textStatus + " " + errorThrown);
                             }
                          });
+                       }else{
+                            var errorlbl = thisTxt.siblings(".error"),
+                                errorParent = errorlbl.parent();
+                            if(errorlbl.length ==1 && errorParent.siblings(".error").length==0){
+                                errorlbl.insertAfter(errorlbl.parent())
+                            }
                        }
                     });
                     // 评论按钮事件
