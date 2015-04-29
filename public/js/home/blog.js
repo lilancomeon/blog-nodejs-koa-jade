@@ -44,7 +44,8 @@ define('js/home/blog',function(require, exports) {
                                               '{{html comment}}',
                                             '</div>',
                                           '</div>',
-                                    '{{/each}}'].join("")
+                                    '{{/each}}'].join(""),
+                    commentDelete : $('.J-commentDelete')
                 },
                 init : function(){
                     var param = this.param;
@@ -266,6 +267,7 @@ define('js/home/blog',function(require, exports) {
                     // 小评论框中的取消按钮事件
                     param.commentList.delegate(param.commentSmCancel,'click',function(){
                         $(this).parent().siblings('textarea').val("").text("");
+                        $(this).parents(param.subCommentsBox).hide();
                     });
                     // 小评论框提交事件
                     param.commentList.delegate(param.commentSmBtn,'click',function(e){
@@ -356,6 +358,25 @@ define('js/home/blog',function(require, exports) {
                         //     }
                         // });
                     });
+                    // 删除评论按钮
+                    param.commentDelete.on('click',function(){
+                        var curDom = $(this);
+                        if(window.confirm("您确定要删除这条评论吗？")){
+                            var obj = {
+                                id : parseInt(curDom.parent().attr("data-id")),
+                                method : "commentDelete"
+                            }
+                            Events.doBlogAjax({
+                                datas : obj,
+                                callback : function(data){
+                                   if(data.isSuccess){
+                                    curDom.parent().parent().remove();
+                                   }
+                                }
+                            });
+                        }
+                    });
+
                 }
         },
         Events = {

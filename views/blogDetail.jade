@@ -30,11 +30,13 @@ block content
         .commentList.J-commentList
           each comment,index in commentList
             .commentBox
-              h4.comment
+              h4.comment(data-id='#{comment.id}')
                 span.comment_date=comment.commentDate
+                - if (comment.userId == userId)
+                  a.commentDelete.J-commentDelete(href='javascript:;') 删除
                 a.layer(href='##{comment.id}') # #{index+1}楼&nbsp;
                 a(name='#{comment.id}')
-                span.comment_user=comment.nickname
+                span.comment_user(data-uid="#{comment.userId}")=comment.nickname
               .comment_body
                 p!=comment.comment
               .comment_vote.J-commentVote(data-id='#{comment.id}',data-bid='#{singleBlog.id}')

@@ -66,7 +66,7 @@ exports.read = function *(next){
     }
   }) || 0;
   var totalPageTemp = parseInt(commentCount/limitLine)+parseInt(commentCount%limitLine>0?1:0);
-  var commentLists = yield db.sequelize.query('SELECT c.id,c.comment,c.commentDate,c.blogid,c.support,u.nickname from blogcomment as c inner join bloguser as u on c.userid = u.id where c.blogid='+Number(this.params.id)+' and refComment=0 order by c.commentDate desc');
+  var commentLists = yield db.sequelize.query('SELECT c.id,c.comment,c.commentDate,c.blogid,c.support,u.nickname,u.id as userId from blogcomment as c inner join bloguser as u on c.userid = u.id where c.blogid='+Number(this.params.id)+' and refComment=0 order by c.commentDate desc');
   // 获取评论数
   var commentCountList = yield db.sequelize.query('select refComment,count(refComment) as counts from blogcomment where refComment in (select id from blogcomment) group by refComment');
   commentCountList = commentCountList[0];
@@ -85,6 +85,7 @@ exports.read = function *(next){
 
 	this.body = yield render('blogDetail',{
 		nickname:_nickName(this.cookies.get("koa:sess")).nickname,
+    userId:_nickName(this.cookies.get("koa:sess")).userId,
 		singleBlog : newDatas,
 		catagoryList:yield db.blogCatagory.findAll(),
 		blogCatagory:yield db.blogCatagory.find(newDatas.dataValues.catagoryId),
@@ -302,6 +303,27 @@ exports.blogDo = function*(next){
         datas:blogcommentPage
       }
       this.body = obj;
+    };break;
+    case 'commentDelete':{
+      var result = {
+        isSuccess:true
+      }
+      var tempId = this.query.id
+      var result1 =yield db.blogcomment.destroy({
+        where : {
+          refComment:tempId
+        }
+      }).on('success',function(){
+        result.data = db.blogcomment.destroy({
+          where : {
+            id:tempId
+          }
+        });
+      }).on('failure',function(err){
+        result.isSuccess = false;
+        result.message = err;
+      });
+      this.body = result;
     };break;
   }
 }
